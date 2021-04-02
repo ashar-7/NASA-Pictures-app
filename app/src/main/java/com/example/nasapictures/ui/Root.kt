@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.nasapictures.ImagesViewModel
+import com.example.nasapictures.ui.details.ImageDetailsScreen
+import com.example.nasapictures.ui.home.HomeScreen
 
 @Composable
 fun Root() {

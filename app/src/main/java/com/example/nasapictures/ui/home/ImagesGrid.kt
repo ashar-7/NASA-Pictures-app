@@ -1,18 +1,14 @@
-package com.example.nasapictures.ui
+package com.example.nasapictures.ui.home
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,68 +17,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.nasapictures.ImagesViewModel
-import com.example.nasapictures.R
-import com.example.nasapictures.UIState
 import com.example.nasapictures.data.NASAImage
 import com.google.accompanist.glide.GlideImage
 
-@Composable
-fun HomeScreen(imagesViewModel: ImagesViewModel) {
-    val isDarkTheme = isSystemInDarkTheme()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(Screen.Home.label) },
-                actions = {
-                    IconButton(onClick = {
-                        AppCompatDelegate.setDefaultNightMode(
-                            when {
-                                isDarkTheme -> AppCompatDelegate.MODE_NIGHT_NO
-                                else -> AppCompatDelegate.MODE_NIGHT_YES
-                            }
-                        )
-                    }) {
-                        Icon(
-                            when {
-                                isDarkTheme -> Icons.Default.LightMode
-                                else -> Icons.Default.DarkMode
-                            },
-                            contentDescription = stringResource(R.string.toggle_night_mode)
-                        )
-                    }
-                }
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-        ) {
-            when (val uiState = imagesViewModel.uiState) {
-                is UIState.Idle -> {
-                }
-                is UIState.Loading -> {
-                }
-                is UIState.Success -> {
-                    ImagesGrid(uiState.data)
-                }
-                is UIState.Failure -> {
-                }
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ImagesGrid(images: List<NASAImage>, modifier: Modifier = Modifier) {
+fun ImagesGrid(images: List<NASAImage>, modifier: Modifier = Modifier) {
     BoxWithConstraints(modifier = modifier) {
         val columns = if (maxWidth < 600.dp) 2 else if (maxWidth < 900.dp) 4 else 6
         LazyVerticalGrid(cells = GridCells.Fixed(columns)) {
