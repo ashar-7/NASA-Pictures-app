@@ -25,36 +25,11 @@ import com.example.nasapictures.ui.Screen
 
 @Composable
 fun HomeScreen(imagesViewModel: ImagesViewModel) {
-    val isDarkTheme = isSystemInDarkTheme()
-
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(Screen.Home.label) },
-                actions = {
-                    IconButton(onClick = {
-                        AppCompatDelegate.setDefaultNightMode(
-                            when {
-                                isDarkTheme -> AppCompatDelegate.MODE_NIGHT_NO
-                                else -> AppCompatDelegate.MODE_NIGHT_YES
-                            }
-                        )
-                    }) {
-                        Icon(
-                            when {
-                                isDarkTheme -> Icons.Default.LightMode
-                                else -> Icons.Default.DarkMode
-                            },
-                            contentDescription = stringResource(R.string.toggle_night_mode)
-                        )
-                    }
-                }
-            )
-        }
+        topBar = { HomeTopBar() }
     ) { padding ->
         Column(
-            modifier = Modifier
-                .padding(padding)
+            modifier = Modifier.padding(padding)
         ) {
             Crossfade(imagesViewModel.uiState) { uiState ->
                 when (uiState) {
@@ -73,6 +48,32 @@ fun HomeScreen(imagesViewModel: ImagesViewModel) {
             }
         }
     }
+}
+
+@Composable
+private fun HomeTopBar() {
+    val isDarkTheme = isSystemInDarkTheme()
+    TopAppBar(
+        title = { Text(Screen.Home.label) },
+        actions = {
+            IconButton(onClick = {
+                AppCompatDelegate.setDefaultNightMode(
+                    when {
+                        isDarkTheme -> AppCompatDelegate.MODE_NIGHT_NO
+                        else -> AppCompatDelegate.MODE_NIGHT_YES
+                    }
+                )
+            }) {
+                Icon(
+                    when {
+                        isDarkTheme -> Icons.Default.LightMode
+                        else -> Icons.Default.DarkMode
+                    },
+                    contentDescription = stringResource(R.string.toggle_night_mode)
+                )
+            }
+        }
+    )
 }
 
 @Composable
