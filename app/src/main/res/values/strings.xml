@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NASA Pictures</string>
+    <string name="toggle_night_mode">Toggle night mode</string>
 </resources>
