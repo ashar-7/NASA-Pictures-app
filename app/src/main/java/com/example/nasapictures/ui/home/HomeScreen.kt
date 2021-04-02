@@ -21,10 +21,11 @@ import androidx.compose.ui.unit.sp
 import com.example.nasapictures.ImagesViewModel
 import com.example.nasapictures.R
 import com.example.nasapictures.UIState
+import com.example.nasapictures.data.NASAImage
 import com.example.nasapictures.ui.Screen
 
 @Composable
-fun HomeScreen(imagesViewModel: ImagesViewModel) {
+fun HomeScreen(imagesViewModel: ImagesViewModel, onImageSelected: (NASAImage) -> Unit) {
     Scaffold(
         topBar = { HomeTopBar() }
     ) { padding ->
@@ -39,7 +40,7 @@ fun HomeScreen(imagesViewModel: ImagesViewModel) {
                         LoadingContent()
                     }
                     is UIState.Success -> {
-                        ImagesGrid(uiState.data)
+                        ImagesGrid(uiState.data, onImageSelected = onImageSelected)
                     }
                     is UIState.Failure -> {
                         ErrorContent()

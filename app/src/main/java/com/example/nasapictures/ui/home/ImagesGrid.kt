@@ -1,6 +1,7 @@
 package com.example.nasapictures.ui.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -23,7 +24,11 @@ import com.google.accompanist.glide.GlideImage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ImagesGrid(images: List<NASAImage>, modifier: Modifier = Modifier) {
+fun ImagesGrid(
+    images: List<NASAImage>,
+    modifier: Modifier = Modifier,
+    onImageSelected: (NASAImage) -> Unit
+) {
     BoxWithConstraints(modifier = modifier) {
         val columns = if (maxWidth < 600.dp) 2 else if (maxWidth < 900.dp) 4 else 6
         LazyVerticalGrid(cells = GridCells.Fixed(columns)) {
@@ -32,6 +37,7 @@ fun ImagesGrid(images: List<NASAImage>, modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxSize()
                         .aspectRatio(0.7f)
+                        .clickable(onClick = { onImageSelected(item) })
                         .padding(2.dp),
                     image = item
                 )
