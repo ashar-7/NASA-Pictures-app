@@ -16,3 +16,17 @@ fun Modifier.verticalGradientBackground(colors: List<Color>) = drawWithCache {
         )
     }
 }
+
+fun Modifier.verticalGradientBackground(
+    vararg colorStops: Pair<Float, Color>
+) = drawWithCache {
+    onDrawBehind {
+        drawRect(
+            Brush.verticalGradient(
+                *colorStops,
+                startY = 0f,
+                endY = size.height
+            )
+        )
+    }
+}

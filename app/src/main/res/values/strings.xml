@@ -3,4 +3,5 @@
     <string name="toggle_night_mode">Toggle night mode</string>
     <string name="images_error_heading">Oops! Something went wrong.</string>
     <string name="images_error_description">Try again in a few minutes or contact support@obvious.com for assistance.</string>
+    <string name="close">Close</string>
 </resources>

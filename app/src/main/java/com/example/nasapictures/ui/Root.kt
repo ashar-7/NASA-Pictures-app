@@ -24,7 +24,9 @@ fun Root() {
 
         composable(Screen.ImageDetails.route) {
             it.arguments?.getString(Screen.ImageDetails.idArgName)?.let { id ->
-                ImageDetailsScreen(id, imagesViewModel)
+                ImageDetailsScreen(id, imagesViewModel, onNavigateUp = {
+                    navController.navigateUp()
+                })
             }
         }
     }
