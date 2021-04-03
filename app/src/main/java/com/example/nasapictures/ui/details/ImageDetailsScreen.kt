@@ -21,6 +21,8 @@ import com.example.nasapictures.ImagesViewModel
 import com.example.nasapictures.R
 import com.example.nasapictures.UIState
 import com.example.nasapictures.data.NASAImage
+import com.example.nasapictures.ui.components.ErrorContent
+import com.example.nasapictures.ui.components.LoadingContent
 import com.example.nasapictures.ui.components.verticalGradientBackground
 import com.google.accompanist.glide.GlideImage
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -47,6 +49,10 @@ fun ImageDetailsScreen(
                     ImageDetails(image, onNavigateUp = onNavigateUp)
                 }
             }
+        }
+        is UIState.Loading -> LoadingContent()
+        is UIState.Failure -> ErrorContent()
+        is UIState.Idle -> {
         }
     }
 }
