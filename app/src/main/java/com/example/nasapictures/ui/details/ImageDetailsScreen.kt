@@ -19,27 +19,33 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.nasapictures.ImagesViewModel
 import com.example.nasapictures.R
+import com.example.nasapictures.UIState
 import com.example.nasapictures.data.NASAImage
 import com.example.nasapictures.ui.components.verticalGradientBackground
 import com.google.accompanist.glide.GlideImage
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun ImageDetailsScreen(
     imageId: String,
     imagesViewModel: ImagesViewModel,
     onNavigateUp: () -> Unit
 ) {
-    val image by imagesViewModel.getImage(imageId).collectAsState(null)
+    when (val uiState = imagesViewModel.uiState) {
+        is UIState.Success -> {
+            val data = uiState.data
+            val initialIndex by remember(imageId) { mutableStateOf(indexOf(imageId, data)) }
+            val pagerState = rememberPagerState(pageCount = data.size, initialPage = initialIndex)
 
-    Surface(color = Color.Black, contentColor = Color.White) {
-        AnimatedVisibility(
-            visible = image != null,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            image?.let { image ->
-                ImageDetails(image, onNavigateUp = onNavigateUp)
+            HorizontalPager(state = pagerState) { index ->
+                val image = data[index]
+
+                Surface(color = Color.Black, contentColor = Color.White) {
+                    ImageDetails(image, onNavigateUp = onNavigateUp)
+                }
             }
         }
     }
@@ -138,5 +144,12 @@ fun ImageMetadata(image: NASAImage) {
                 )
             }
         }
+    }
+}
+
+private fun indexOf(id: String, data: List<NASAImage>): Int {
+    return when (val index = data.indexOf(data.find { it.title == id })) {
+        -1 -> 0
+        else -> index
     }
 }

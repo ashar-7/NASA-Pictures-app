@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.nasapictures.data.ImagesRepository
 import com.example.nasapictures.data.NASAImage
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class ImagesViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,14 +25,6 @@ class ImagesViewModel(application: Application) : AndroidViewModel(application) 
                     UIState.Success(data)
                 }
             }
-        }
-    }
-
-    fun getImage(id: String) = flow {
-        when (val state = uiState) {
-            // Treating title as id
-            is UIState.Success -> emit(state.data.find { it.title == id })
-            else -> emit(null)
         }
     }
 }
