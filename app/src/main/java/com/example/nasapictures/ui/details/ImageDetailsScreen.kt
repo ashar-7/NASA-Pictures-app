@@ -101,7 +101,7 @@ private fun ImageDetails(image: NASAImage, onNavigateUp: () -> Unit) {
 }
 
 @Composable
-fun ImageMetadata(image: NASAImage) {
+private fun ImageMetadata(image: NASAImage) {
     var showMore by remember { mutableStateOf(false) }
 
     Box(
